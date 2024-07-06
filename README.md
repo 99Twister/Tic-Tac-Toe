@@ -1,2 +1,3 @@
 # Tic-Tac-Toe
-Game made with javascript
+
+Made as part of The Odin Project Curriculum
