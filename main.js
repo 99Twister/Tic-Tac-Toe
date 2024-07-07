@@ -15,3 +15,19 @@ const gameBoard = (function() {
   return { board, log, reset };
 
 })();
+
+const game = (function() {
+
+  let board = gameBoard.board;
+
+  function makeMove(move, pos) {
+    if (board[pos] === " ") {
+      board.splice(pos, 1, move);
+    } else {
+      console.log("That spot is already taken!");
+    }
+  }
+
+  return { makeMove, checkWin };
+
+})();
