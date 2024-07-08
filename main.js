@@ -1,6 +1,6 @@
 const gameBoard = (function() {
 
-  let board = ["X", "X", "X", " ", " ", " ", " ", " ", " "];
+  let board = ["X", " ", " ", " ", "X", " ", " ", " ", "X"];
 
   function log() {
     console.log(board.slice(0, 3));
@@ -42,7 +42,10 @@ const game = (function() {
     }
 
     // cross check
-
+    for (i = 2; i <= 4; i += 2) {
+      const slice = board.slice(4-i, 5-i) + board.slice(4, 5) + board.slice(4+i, 5+i);
+      compare(slice); 
+    }
   }
 
   function makeMove(move, pos) {
