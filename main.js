@@ -1,6 +1,6 @@
 const gameBoard = (function() {
 
-  let board = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
+  let board = [" ", "O", "X", "O", "O", "X", "O", "X", "O"];
 
   function log() {
     console.log(board.slice(0, 3));
@@ -59,6 +59,13 @@ const game = (function() {
       const slice = board.slice(4-i, 5-i) + board.slice(4, 5) + board.slice(4+i, 5+i);
       if (compare(slice)) return true;
     }
+
+    // tie check
+    if (!board.includes(" ")) {
+      console.log("The game ended in a tie!");
+      return true;
+    }
+
   }
 
   return { makeMove, checkWin };
