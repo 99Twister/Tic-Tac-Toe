@@ -1,6 +1,6 @@
 const gameBoard = (function() {
 
-  let board = ["X", "X", "X", "O", "O", "O", "X", "X", "X"];
+  let board = [" ", " ", "X", " ", " ", "X", " ", " ", "X"];
 
   function log() {
     console.log(board.slice(0, 3));
@@ -21,12 +21,23 @@ const game = (function() {
   let board = gameBoard.board;
 
   function checkWin() {
+    // horizontal check
     for (i = 0; i < 9; i += 3) {
-      if (board.slice(i, i + 3).join("") == "XXX" || board.slice(i, i + 3).join("") == "OOO") {
+      if (board.slice(i, i+3).join("") == "XXX" || board.slice(i, i+3).join("") == "OOO") {
         console.log(`${board.slice(i, i+1)} won!`);
         return true;
       }
     }
+
+    // vertical check
+    for (i = 0; i <= 2; i++) {
+      let slice = board.slice(i, i+1) + board.slice(i+3, i+4) + board.slice(i+6, i+7);
+      if (slice === "XXX" || slice === "OOO") {
+        console.log(`${board.slice(i, i+1)} won!`);
+        return true;
+      }
+    }
+
   }
 
   function makeMove(move, pos) {
