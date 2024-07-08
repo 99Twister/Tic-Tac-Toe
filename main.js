@@ -1,6 +1,6 @@
 const gameBoard = (function() {
 
-  let board = [" ", " ", "X", " ", " ", "X", " ", " ", "X"];
+  let board = ["X", "X", "X", " ", " ", " ", " ", " ", " "];
 
   function log() {
     console.log(board.slice(0, 3));
@@ -21,22 +21,27 @@ const game = (function() {
   let board = gameBoard.board;
 
   function checkWin() {
-    // horizontal check
-    for (i = 0; i < 9; i += 3) {
-      if (board.slice(i, i+3).join("") == "XXX" || board.slice(i, i+3).join("") == "OOO") {
-        console.log(`${board.slice(i, i+1)} won!`);
-        return true;
-      }
-    }
 
-    // vertical check
-    for (i = 0; i <= 2; i++) {
-      let slice = board.slice(i, i+1) + board.slice(i+3, i+4) + board.slice(i+6, i+7);
+    function compare(slice) {
       if (slice === "XXX" || slice === "OOO") {
         console.log(`${board.slice(i, i+1)} won!`);
         return true;
       }
     }
+
+    // horizontal check
+    for (i = 0; i <= 6; i += 3) {
+      const slice = board.slice(i, i+3).join("");
+      compare(slice)
+    }
+
+    // vertical check
+    for (i = 0; i <= 2; i++) {
+      const slice = board.slice(i, i+1) + board.slice(i+3, i+4) + board.slice(i+6, i+7);
+      compare(slice)
+    }
+
+    // cross check
 
   }
 
