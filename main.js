@@ -1,6 +1,6 @@
 const gameBoard = (function() {
 
-  let board = [" ", "O", "X", "O", "O", "X", "O", "X", "O"];
+  let board = [" ", "O", "X", "O", "O", "X", " ", "X", "O"];
 
   function log() {
     console.log(board.slice(0, 3));
@@ -25,6 +25,7 @@ const game = (function() {
     if (board[pos] === " ") {
       board.splice(pos, 1, move.toUpperCase());
       gameBoard.log();
+      renderDOM.update();
       if (checkWin()) {
         if (prompt("Start new game? Y/N").toUpperCase() === "Y") {
           gameBoard.reset();
@@ -73,5 +74,22 @@ const game = (function() {
   }
 
   return { makeMove, checkWin };
+
+})();
+
+const renderDOM = (function() {
+
+  const board = gameBoard.board;
+  const tiles = document.getElementsByClassName("tile");
+
+  function update() {
+
+    for (let i = 0; i <= 8; i++) {
+      tiles[i].innerHTML = board[i];
+    }
+
+  }
+
+  return { update };
 
 })();
