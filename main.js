@@ -10,6 +10,7 @@ const gameBoard = (function() {
 
   function reset() {
     board = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
+    gameBoard.log();
   }
 
   return { board, log, reset };
@@ -23,6 +24,7 @@ const game = (function() {
   function makeMove(move, pos) {
     if (board[pos] === " ") {
       board.splice(pos, 1, move.toUpperCase());
+      gameBoard.log();
       if (checkWin()) {
         if (prompt("Start new game? Y/N").toUpperCase() === "Y") {
           gameBoard.reset();
@@ -37,26 +39,28 @@ const game = (function() {
 
     function compare(slice) {
       if (slice === "XXX" || slice === "OOO") {
-        console.log(`${board.slice(i, i+1)} won!`);
+        console.log(`${slice[0]} won!`);
         return true;
       }
+      return false;
     }
 
     // horizontal check
-    for (i = 0; i <= 6; i += 3) {
-      const slice = board.slice(i, i+3).join("");
+    for (let i = 0; i <= 6; i += 3) {
+      const slice = board.slice(i, i + 3).join("");
       if (compare(slice)) return true;
     }
 
     // vertical check
-    for (i = 0; i <= 2; i++) {
-      const slice = board.slice(i, i+1) + board.slice(i+3, i+4) + board.slice(i+6, i+7);
+    for (let i = 0; i <= 2; i++) {
+      const slice = board[i] + board[i + 3] + board[i + 6];
       if (compare(slice)) return true;
     }
 
-    // cross check
-    for (i = 2; i <= 4; i += 2) {
-      const slice = board.slice(4-i, 5-i) + board.slice(4, 5) + board.slice(4+i, 5+i);
+    // diagonal check
+    // 4 is the center of the board, i is the distance between
+    for (let i = 2; i <= 4; i += 2) {
+      const slice = board[4 - i] + board[4] + board[4 + i];
       if (compare(slice)) return true;
     }
 
