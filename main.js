@@ -1,6 +1,6 @@
 const gameBoard = (function() {
 
-  let board = [" ", "O", "X", "O", "O", "X", " ", "X", "O"];
+  let board = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
 
   function log() {
     console.log(board.slice(0, 3));
@@ -25,15 +25,11 @@ const game = (function() {
     if (board[pos] === " ") {
       board.splice(pos, 1, move.toUpperCase());
       gameBoard.log();
-      renderDOM.update();
-      if (checkWin()) {
-        if (prompt("Start new game? Y/N").toUpperCase() === "Y") {
-          gameBoard.reset();
-        } 
-      }
+      checkWin();
     } else {
       console.log("That spot is already taken!");
     }
+    display.update();
   }
 
   function checkWin() {
@@ -77,7 +73,7 @@ const game = (function() {
 
 })();
 
-const renderDOM = (function() {
+const display = (function() {
 
   const board = gameBoard.board;
   const tiles = document.getElementsByClassName("tile");
@@ -87,8 +83,23 @@ const renderDOM = (function() {
     for (let i = 0; i <= 8; i++) {
       tiles[i].innerHTML = board[i];
     }
-
   }
+
+  let mark = 0;
+
+  for (let tile of tiles) {
+    tile.addEventListener("click", () => {
+      if (mark) {
+        game.makeMove("O", tile.getAttribute("data-"));
+        mark = 0;
+      } else {
+        game.makeMove("X", tile.getAttribute("data-"));
+        mark = 1;
+      }
+    });
+  }
+
+  
 
   return { update };
 
