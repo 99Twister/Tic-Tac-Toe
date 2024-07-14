@@ -73,3 +73,7 @@ button:active {
   height: 100%;
   border: 5px solid black;
 }
+
+.tile:hover {
+  background-color: rgb(235, 235, 235);
+}
