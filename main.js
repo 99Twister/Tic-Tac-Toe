@@ -12,6 +12,7 @@ const gameBoard = (function() {
     board = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
     display.update();
     document.getElementById("score").innerHTML = "";
+    display.mark = 0;
     display.unfreeze()
     gameBoard.log();
   }
@@ -45,11 +46,27 @@ const game = (function() {
 
     function compare(slice) {
       if (slice === "XXX" || slice === "OOO") {
-        document.getElementById("score").innerHTML = `${slice[0]} won!`;
+        let winner;
+
+        if (slice === "XXX") {
+          winner = display.getPlayers().player1;
+        } else {
+          winner = display.getPlayers().player2;
+        }
+
+        if (winner === "") {
+          document.getElementById("score").innerHTML = `${slice[0]} won!`;
+          console.log(`${slice[0]} won!`);
+          display.freeze();
+          return true;
+        }
+
+        document.getElementById("score").innerHTML = `${winner} won!`;
         console.log(`${slice[0]} won!`);
         display.freeze();
         return true;
       }
+
       return false;
     }
 
@@ -96,6 +113,13 @@ const display = (function() {
     }
   }
 
+  function getPlayers() {
+    const player1 = document.getElementById("player1Name").value;
+    const player2 = document.getElementById("player2Name").value;
+
+    return { player1, player2 };
+  }
+
   let mark = 0;
 
   function assignMark() {
@@ -126,6 +150,6 @@ const display = (function() {
 
   document.getElementById("newGame").addEventListener("click", gameBoard.reset);
 
-  return { update, freeze, unfreeze };
+  return { mark, update, getPlayers, freeze, unfreeze };
 
 })();

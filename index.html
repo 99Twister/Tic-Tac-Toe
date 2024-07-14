@@ -9,7 +9,19 @@
 <body>
 
   <div id="boardDisplay">
+    <div id="players">
+      <div>
+        <label for="player1Name">Player's 1 name (X)</label>
+        <input type="text" name="player1Name" id="player1Name">
+      </div>
+      <div>
+        <label for="player2Name">Player's 2 name (O)</label>
+        <input type="text" name="player2Name" id="player2Name">
+      </div>
+    </div>
+
     <div id="score"></div>
+
     <div class="tile" data-="0"></div>
     <div class="tile" data-="1"></div>
     <div class="tile" data-="2"></div>
@@ -19,6 +31,7 @@
     <div class="tile" data-="6"></div>
     <div class="tile" data-="7"></div>
     <div class="tile" data-="8"></div>
+
     <button id="newGame">New Game</button>
   </div>
 
