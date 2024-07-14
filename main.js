@@ -37,6 +37,7 @@ const game = (function() {
     function compare(slice) {
       if (slice === "XXX" || slice === "OOO") {
         console.log(`${slice[0]} won!`);
+        display.freeze();
         return true;
       }
       return false;
@@ -87,20 +88,26 @@ const display = (function() {
 
   let mark = 0;
 
-  for (let tile of tiles) {
-    tile.addEventListener("click", () => {
-      if (mark) {
-        game.makeMove("O", tile.getAttribute("data-"));
-        mark = 0;
-      } else {
-        game.makeMove("X", tile.getAttribute("data-"));
-        mark = 1;
-      }
-    });
+  function assignMark() {
+    if (mark) {
+      game.makeMove("O", this.getAttribute("data-"));
+      mark = 0;
+    } else {
+      game.makeMove("X", this.getAttribute("data-"));
+      mark = 1;
+    }
   }
 
-  
+  for (let tile of tiles) {
+    tile.addEventListener("click", assignMark);
+  }
 
-  return { update };
+  function freeze() {
+    for (let tile of tiles) {
+      tile.removeEventListener("click", assignMark);
+    }
+  }
+
+  return { update, freeze };
 
 })();
