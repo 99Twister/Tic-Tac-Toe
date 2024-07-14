@@ -12,9 +12,26 @@ body {
 #score {
   position: absolute;
   top: -125px;
-  left: 175px;
+  text-align: center;
+  width: 500px;
   font-size: 3rem;
   font-weight: bold;
+}
+
+button {
+  cursor: pointer;
+  position: absolute;
+  bottom: -140px;
+  width: 500px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: white;
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+button:active {
+  background-color: rgb(221, 221, 221);
 }
 
 #boardDisplay {

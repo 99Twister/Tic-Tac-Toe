@@ -10,18 +10,25 @@ const gameBoard = (function() {
 
   function reset() {
     board = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
+    display.update();
+    document.getElementById("score").innerHTML = "";
+    display.unfreeze()
     gameBoard.log();
   }
 
-  return { board, log, reset };
+  function getBoard() {
+    return board;
+  }
+
+  return { getBoard, log, reset };
 
 })();
 
 const game = (function() {
 
-  const board = gameBoard.board;
-
   function makeMove(move, pos) {
+    const board = gameBoard.getBoard();
+
     if (board[pos] === " ") {
       board.splice(pos, 1, move.toUpperCase());
       gameBoard.log();
@@ -29,10 +36,12 @@ const game = (function() {
     } else {
       console.log("That spot is already taken!");
     }
+
     display.update();
   }
 
   function checkWin() {
+    const board = gameBoard.getBoard();
 
     function compare(slice) {
       if (slice === "XXX" || slice === "OOO") {
@@ -65,6 +74,7 @@ const game = (function() {
 
     // tie check
     if (!board.includes(" ")) {
+      document.getElementById("score").innerHTML = "The game ended in a tie!";
       console.log("The game ended in a tie!");
       return true;
     }
@@ -76,13 +86,12 @@ const game = (function() {
 })();
 
 const display = (function() {
-
-  const board = gameBoard.board;
   const tiles = document.getElementsByClassName("tile");
 
   function update() {
+    const board = gameBoard.getBoard();
 
-    for (let i = 0; i <= 8; i++) {
+    for (let i = 0; i <= 8; i++) {  
       tiles[i].innerHTML = board[i];
     }
   }
@@ -98,7 +107,7 @@ const display = (function() {
       mark = 1;
     }
   }
-
+  
   for (let tile of tiles) {
     tile.addEventListener("click", assignMark);
   }
@@ -109,6 +118,14 @@ const display = (function() {
     }
   }
 
-  return { update, freeze };
+  function unfreeze() {
+    for (let tile of tiles) {
+      tile.addEventListener("click", assignMark);
+    }
+  }
+
+  document.getElementById("newGame").addEventListener("click", gameBoard.reset);
+
+  return { update, freeze, unfreeze };
 
 })();
