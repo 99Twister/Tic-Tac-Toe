@@ -36,6 +36,7 @@ const game = (function() {
 
     function compare(slice) {
       if (slice === "XXX" || slice === "OOO") {
+        document.getElementById("score").innerHTML = `${slice[0]} won!`;
         console.log(`${slice[0]} won!`);
         display.freeze();
         return true;
