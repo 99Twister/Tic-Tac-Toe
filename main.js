@@ -2,26 +2,19 @@ const gameBoard = (function() {
 
   let board = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
 
-  function log() {
-    console.log(board.slice(0, 3));
-    console.log(board.slice(3, 6));
-    console.log(board.slice(6, 9));
-  }
-
   function reset() {
     board = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
     display.update();
     document.getElementById("score").innerHTML = "";
     display.mark = 0;
     display.unfreeze()
-    gameBoard.log();
   }
 
   function getBoard() {
     return board;
   }
 
-  return { getBoard, log, reset };
+  return { getBoard, reset };
 
 })();
 
@@ -32,10 +25,7 @@ const game = (function() {
 
     if (board[pos] === " ") {
       board.splice(pos, 1, move.toUpperCase());
-      gameBoard.log();
       checkWin();
-    } else {
-      console.log("That spot is already taken!");
     }
 
     display.update();
@@ -56,13 +46,11 @@ const game = (function() {
 
         if (winner === "") {
           document.getElementById("score").innerHTML = `${slice[0]} won!`;
-          console.log(`${slice[0]} won!`);
           display.freeze();
           return true;
         }
 
         document.getElementById("score").innerHTML = `${winner} won!`;
-        console.log(`${slice[0]} won!`);
         display.freeze();
         return true;
       }
@@ -92,7 +80,6 @@ const game = (function() {
     // tie check
     if (!board.includes(" ")) {
       document.getElementById("score").innerHTML = "The game ended in a tie!";
-      console.log("The game ended in a tie!");
       return true;
     }
 
